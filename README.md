@@ -15,7 +15,7 @@ El Makefile está configurado para sistemas de 64 bits. En caso de que el suyo s
 ### **DISEÑO DEL MICROPROCESADOR**
 
 
-
+![diseño](https://github.com/luisccode/micro-arq/blob/master/micro/img/micro.jpg)
 ### **INTEGRANTES**
 - **Luis Cortés** - CI: **26.880.969**
 - **Jesús Valero** - CI: **27.241.070**
