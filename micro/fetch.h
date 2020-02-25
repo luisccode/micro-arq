@@ -7,8 +7,7 @@
 #include "macros.h"
 using namespace std;
 
-SC_MODULE(Fetch)
-{
+SC_MODULE(Fetch){
   ifstream MI;
   sc_in <bool> clk;
   sc_out < sc_uint < INSTRUCTION_SIZE> > instruction_in;

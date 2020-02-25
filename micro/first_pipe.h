@@ -1,12 +1,12 @@
-#ifndef DCODE_H
-#define DCODE_H
+#ifndef FIRST_PIPE_H
+#define FIRST_PIPE_H
 
 #include <string>
 #include <iomanip>
 #include "macros.h"
 using namespace std;
 
-SC_MODULE(Dcode)
+SC_MODULE(First_pipe)
 {
   sc_in <bool> clk;
   sc_in < sc_uint < INSTRUCTION_SIZE > > instruction_to_decode;
@@ -14,7 +14,7 @@ SC_MODULE(Dcode)
   sc_out < sc_uint < INSTRUCTION > > address_1, address_2, res_address;
   sc_uint < INSTRUCTION > temp;
 
-  void dcode()
+  void first_pipe()
   {
     instruction.write(instruction_to_decode.read().range(3, 0));
     address_1.write(instruction_to_decode.read().range(7, 4));
@@ -22,13 +22,13 @@ SC_MODULE(Dcode)
     res_address.write(instruction_to_decode.read().range(15, 12));
   }
   
-  SC_CTOR(Dcode)
+  SC_CTOR(First_pipe)
   {
-    SC_METHOD(dcode);
+    SC_METHOD(first_pipe);
     sensitive << clk.pos();
   }
   
-  ~Dcode(){}
+  ~First_pipe(){}
 };
 
 #endif

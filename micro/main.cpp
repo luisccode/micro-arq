@@ -2,10 +2,12 @@
 #include <string>
 #include <iomanip>
 #include "pipe.h"
-#include "dcode.h"
+#include "first_pipe.h"
 #include "macros.h"
+#include "cache.h"
 #include "fetch.h"
 #include "ALU.h"
+
 #include "testbench.h"
 
 int sc_main(int argv, char* argc[])
@@ -15,7 +17,7 @@ int sc_main(int argv, char* argc[])
   sc_clock clock("clock", PERIOD, 0.5, DELAY, true);
   
   Fetch ft("fetch");
-  Dcode dcode("dcode");
+  First_pipe pipe1("pipe1");
   ALU alu("alu");
   Testbench tb("tb");
   
@@ -27,12 +29,12 @@ int sc_main(int argv, char* argc[])
   ft.instruction_in(pc);
   ft.clk(clock);
   
-  dcode.clk(clock);
-  dcode.instruction_to_decode(pc);
-  dcode.instruction(instruction_sg);
-  dcode.address_1(address_1_sg);
-  dcode.address_2(address_2_sg);
-  dcode.res_address(res_address_sg);
+  pipe1.clk(clock);
+  pipe1.instruction_to_decode(pc);
+  pipe1.instruction(instruction_sg);
+  pipe1.address_1(address_1_sg);
+  pipe1.address_2(address_2_sg);
+  pipe1.res_address(res_address_sg);
 
   alu.clk(clock);
   alu.instruction(instruction_sg);

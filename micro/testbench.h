@@ -1,5 +1,4 @@
 #ifndef TESTBENCH
-#define TESTBENCH
 
 #include <iomanip>
 #include "macros.h"
