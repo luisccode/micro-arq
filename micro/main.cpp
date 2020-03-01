@@ -1,5 +1,4 @@
 #include <systemc.h>
-#include <string>
 #include <iomanip>
 #include "pipe.h"
 #include "first_pipe.h"
@@ -24,10 +23,11 @@ int sc_main(int argv, char* argc[])
   ALU alu("alu");
   Testbench tb("tb");
   
-  sc_signal<bool> enable_sg;
+  sc_signal<bool> enable_sg,enable_2nd_pipe_sg;
   sc_signal < sc_uint < INSTRUCTION > > instruction_sg;
   sc_signal < sc_uint < INSTRUCTION > > address_1_sg, address_2_sg, res_address_sg, value_1_sg, value_2_sg, res_sg;
   sc_signal < sc_uint < INSTRUCTION_SIZE > > pc;
+  array<sc_signal<bool>, 4 > available_value; 
   
   ft.instruction_in(pc);
   ft.clk(clock);
@@ -45,8 +45,10 @@ int sc_main(int argv, char* argc[])
   cache.dir2(address_2_sg);
   cache.data_in1(value_1_sg);
   cache.data_in2(value_2_sg);
-  cache.value_1(value_1_sg);
-  cache.value_2(value_2_sg);
+  cache.data_out1(value_1_sg);
+  cache.data_out2(value_2_sg);
+  cache.available_v1(available_value[0]);
+  cache.available_v2(available_value[1]);
 
 
   pipe2.clk(clock);
@@ -54,6 +56,8 @@ int sc_main(int argv, char* argc[])
   pipe2.address_2(address_2_sg);
   pipe2.value_1(value_1_sg);
   pipe2.value_2(value_2_sg);
+  pipe2.available_v1(available_value[2]);
+  pipe2.available_v2(available_value[3]);
 
 
   alu.clk(clock);

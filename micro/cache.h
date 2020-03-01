@@ -1,56 +1,69 @@
 #ifndef CACHE_H
 #define CACHE_H
-
-
 #include <iomanip>
 #include "macros.h"
-#include <string>
-
+#include <iostream>
+#include<set>
+#include <utility>
 using namespace std;
 
 SC_MODULE(Cache) {
-	
 	sc_in <sc_uint<4> > dir1,dir2;
-	sc_in <sc_uint<4> > data_in1,data_in2;
-	sc_out < sc_uint < INSTRUCTION > > value_1, value_2;
-
-	sc_uint<4> data[5];
+	sc_in <sc_uint<4> > data_in1, data_in2;
+	sc_out < sc_uint < INSTRUCTION > > data_out1, data_out2;
+	set < pair < unsigned int, pair<unsigned int,unsigned int> >>data;
+  	set < pair < unsigned int, pair<unsigned int,unsigned int> >>::iterator it, aux;
 
 	sc_in <bool> enable;
+	sc_out <bool> available_v1,available_v2;
 	sc_in <bool> clk;
 
 	void read() {
 		if (clk.read() == 0 ) {
-			value_1 = data[dir1.read()];
-			value_2 = data[dir2.read()];
-			cout << "Leyendo: data[" << dir1.read() << "] almacena " << data[dir1.read()] << "\n";
-			cout << "Leyendo: data[" << dir2.read() << "] almacena " << data[dir2.read()] << "\n";
+			it = data.begin();
+			while (it!=data.end()){
+				if( it->second.first == dir1.read() ){  // si la direccion es igual a la dir buscada 
+					data_out1 = it->second.second; 
+					aux = it;
+				}
+				it++; 
+			}
+			// se aumenta 1 al numero de accesos, OJO  podria salir mas facil con wsap()
+			pair < unsigned int, pair<unsigned int,unsigned int> >g;
+			g = make_pair(aux->first+1, make_pair(aux->second.first, aux->second.second));
+			data.erase(aux); 
+			data.insert (g);
 		}
 	}
 	
 	void write() {
-		// la condición del if es equivalente a:
-		// (clk.read() != 0) && (enable.read() != 0)
 		if (clk.read() && enable.read()) {
-			data[dir1.read()] = data_in1.read();
-			data[dir2.read()] = data_in2.read();
-			cout << "Escribiendo: data[" << dir1.read() << "] = " << data[dir1.read()] << "\n";
-			cout << "Escribiendo: data[" << dir2.read() << "] = " << data[dir2.read()] << "\n";
-			for (int i = 0; i < 5; ++i) {
-				cout << setw(2) << i << ": ";
-				for (int j = 3; j >= 0; --j)
-					cout << data[i].range(j,j);
-				cout << endl;
+			pair < unsigned int, pair<unsigned int,unsigned int> >g1 = make_pair(1, make_pair(dir1.read(), data_in1.read()) );
+			data.insert (g1);
+			// el tamano maximo de la cache es 5
+			if(data.size() >= 6){ // si se llena la cache eliminamos la variable menos usada
+				it = data.begin();
+				unsigned int min=it->first;
+				while (it!=data.end()){
+					if( (it->first <= min) && (it->second.first != data_in1.read()) ){ //se el selecciona la variable con menos accesos y que a la vez sea diferente de la nueva a ingresar
+						aux = it;
+						min=it->first;
+					}
+					it++; 
+				}
+				data.erase(aux); 
 			}
 		}
 	}
+	void update(){
 
+	}
 	SC_CTOR(Cache) {
 		SC_METHOD(read);
-		sensitive << clk.neg(); //0
+		sensitive << clk.neg();
 		SC_METHOD(write);
-		sensitive << clk.pos(); //1
+		sensitive << clk.pos();
 	}
 };
 
-#endif//CACHE_H
+#endif

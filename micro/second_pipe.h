@@ -13,29 +13,26 @@ SC_MODULE(Second_pipe)
   sc_in <bool> clk;
   sc_in < sc_uint < INSTRUCTION> > address_1, address_2;
   sc_out < sc_uint < INSTRUCTION > > value_1, value_2;
+	sc_out <bool> available_v1,available_v2;
 
-  void operate()
-  {
+  void operate(){
     RF.open(Register_file);
     string line;
     sc_uint < 4 > adress, v1, v2;
     
-    while(not RF.eof())
-    {
+    while(not RF.eof()){
       getline(RF, line);
       for(int i = 4; i < OPERATOR_VALUE; ++i)
         (line[i] == '1') ? adress[OPERATOR_VALUE - 1 - i] = 1 : adress[OPERATOR_VALUE - 1 - i] = 0;
       
-      if(adress == address_1)
-      {
+      if(adress == address_1){
         for(int i = 0; i < 4; ++i)
           (line[i] == '1') ? v1[4 - 1 - i] = 1 : v1[4 - 1 - i] = 0;
 
         value_1.write(v1);
       }
       
-      if(adress == address_2)
-      {
+      if(adress == address_2){
         for(int i = 0; i < 4; ++i)
           (line[i] == '1') ? v2[4 - 1 - i] = 1 : v2[4 - 1 - i] = 0;
 
