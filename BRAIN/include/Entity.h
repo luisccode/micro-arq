@@ -23,8 +23,10 @@ class Entity{
         int get_x();
         int get_y();
         string get_place();
+        bool get_visited();
         //Setters
         void set_visited(bool);
+        void set_place(string);
 };
 
 #endif

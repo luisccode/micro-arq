@@ -39,6 +39,14 @@ string Entity::get_place(){
     return place;
 }
 
+bool Entity::get_visited(){
+    return visited;
+}
+
 void Entity::set_visited(bool visited){
     this->visited = visited;
+}
+
+void Entity::set_place(string name){
+    place = name;
 }

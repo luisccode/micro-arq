@@ -7,12 +7,10 @@
 #include <macro.h>
 using namespace std;
 
-bool is_the_first_smaller(int, int, int);
-
 BRAIN::BRAIN(){
-	Biologic = 7;
-	Cultural = 6;
-	Emotional = 5;
+	Biologic = 6;
+	Cultural = 5;
+	Emotional = 4;
 }
 
 BRAIN::~BRAIN(){}
@@ -107,23 +105,32 @@ string BRAIN::dec_to_binary(int n){
 }
 
 void BRAIN::select_place(vector<Entity> &entities){
-	int i = random_number(0, 2);
+	int i = random_number(0, 6);
 	//Para aumentar el termómetro Biológico
-	if(is_the_first_smaller(Biologic, Cultural, Emotional)){
+	if(is_the_first_smaller(Biologic, Cultural, Emotional, 1))
 		move(entities, i);
-	}
 	//Para aumentar el termómetro Cultural
-	else if(is_the_first_smaller(Cultural, Biologic, Emotional)){
-		move(entities, (i==2)? 2 : i+3); //Si se escoge a la Casa, no se le suma 3
-	}
+	else if(is_the_first_smaller(Cultural, Biologic, Emotional, 2))
+		move(entities, (i==21)? 2 : i+7); //Si se escoge a la Casa, no se le suma 7
 	//Para aumentar el termómetro Emocional
-	else if(is_the_first_smaller(Emotional, Biologic, Cultural)){
-		move(entities, (i==2)? 2 : i+6);	//Si se escoge la casa, no se le suma 6
+	else if(is_the_first_smaller(Emotional, Biologic, Cultural, 3))
+		move(entities, (i==21)? 2 : i+14);	//Si se escoge la casa, no se le suma 14
+	
+	else if(Biologic >= 7 and Cultural >= 6 and Emotional >= 6){
+		int v = random_number(0, 2);
+		move(entities, v+22);
+		if(entities[v+22].get_place() == "--------")
+			discover_place(entities, v+22);	//Si el lugar no se conoce, se va y se conoce xd
 	}
 }
 
-bool is_the_first_smaller(int a, int b, int c){
-	return(a < b and a < c) ? true : false;
+bool is_the_first_smaller(int a, int b, int c, int opt){
+	if(opt == 1)	//BIOLOGICO
+		return(a <= b and a <= c) ? true : false;
+	else if(opt == 2)	//CULTURAL
+		return(a < b and a < c) ? true : false;
+	else	//EMOCIONAL
+		return(a < b and a <= c) ? true : false;
 }
 
 void BRAIN::move(vector<Entity> &entities, int i){
@@ -135,8 +142,13 @@ void BRAIN::move(vector<Entity> &entities, int i){
 	Cultural += cul;
 	Emotional += emo;
 
+	if(Biologic > 10) Biologic = 10;
+	if(Cultural > 10) Cultural = 10;
+	if(Emotional > 10) Emotional = 10;
+
 	for(int x = 0; x < entities.size(); x++)
 		entities[x].set_visited(false);
 	entities[i].set_visited(true);
+
 	cout << "\nFUI A: " << entities[i].get_place() << "\n";
 }
