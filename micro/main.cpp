@@ -1,10 +1,9 @@
 #include <systemc.h>
 #include <iomanip>
-#include "pipe.h"
 #include "first_pipe.h"
 #include "second_pipe.h"
+#include "third_pipe.h"
 #include "macros.h"
-#include "cache.h"
 #include "fetch.h"
 #include "ALU.h"
 
@@ -18,8 +17,8 @@ int sc_main(int argv, char* argc[])
   
   Fetch ft("fetch");
   First_pipe pipe1("pipe1");
-  Cache cache("cache1");
   Second_pipe pipe2("pipe2");
+  Third_pipe pipe3("pipe3");
   ALU alu("alu");
   Testbench tb("tb");
   
@@ -27,7 +26,6 @@ int sc_main(int argv, char* argc[])
   sc_signal < sc_uint < INSTRUCTION > > instruction_sg;
   sc_signal < sc_uint < INSTRUCTION > > address_1_sg, address_2_sg, res_address_sg, value_1_sg, value_2_sg, res_sg;
   sc_signal < sc_uint < INSTRUCTION_SIZE > > pc;
-  array<sc_signal<bool>, 4 > available_value; 
   
   ft.instruction_in(pc);
   ft.clk(clock);
@@ -39,26 +37,17 @@ int sc_main(int argv, char* argc[])
   pipe1.address_2(address_2_sg);
   pipe1.res_address(res_address_sg);
 
-  cache.clk(clock);
-  cache.enable(enable_sg);
-  cache.dir1(address_1_sg);
-  cache.dir2(address_2_sg);
-  cache.data_in1(value_1_sg);
-  cache.data_in2(value_2_sg);
-  cache.data_out1(value_1_sg);
-  cache.data_out2(value_2_sg);
-  cache.available_v1(available_value[0]);
-  cache.available_v2(available_value[1]);
-
 
   pipe2.clk(clock);
   pipe2.address_1(address_1_sg);
   pipe2.address_2(address_2_sg);
   pipe2.value_1(value_1_sg);
   pipe2.value_2(value_2_sg);
-  pipe2.available_v1(available_value[2]);
-  pipe2.available_v2(available_value[3]);
 
+
+  pipe3.clk(clock);
+  pipe3.res_address(res_address_sg);
+  pipe3.res(res_sg);
 
   alu.clk(clock);
   alu.instruction(instruction_sg);

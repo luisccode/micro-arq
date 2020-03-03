@@ -1,6 +1,6 @@
 CXX = g++
 FLAGS = -I../include/
-OBJ = main.o  Brain.o Entidad.o 
+OBJ = main.o  Brain.o Entity.o functions.o
 SRC = ../src/
 
 test: $(OBJ)
@@ -13,7 +13,10 @@ main.o: main.cpp
 Brain.o: $(SRC)Brain.cpp
 	$(CXX) $(FLAGS) $^ -c
 
-Entidad.o: $(SRC)Entidad.cpp
+Entity.o: $(SRC)Entity.cpp
+	$(CXX) $(FLAGS) $^ -c
+
+functions.o: $(SRC)functions.cpp
 	$(CXX) $(FLAGS) $^ -c
 
 clean:

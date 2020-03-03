@@ -10,10 +10,9 @@
 SC_MODULE(Second_pipe)
 {
   ifstream RF;
-  sc_in <bool> clk;
+   sc_in <bool> clk;
   sc_in < sc_uint < INSTRUCTION> > address_1, address_2;
   sc_out < sc_uint < INSTRUCTION > > value_1, value_2;
-	sc_out <bool> available_v1,available_v2;
 
   void operate(){
     RF.open(Register_file);
