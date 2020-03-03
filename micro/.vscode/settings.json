@@ -3,6 +3,7 @@
         "utility": "cpp",
         "queue": "cpp",
         "vector": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "deque": "cpp"
     }
 }

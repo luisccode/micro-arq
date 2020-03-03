@@ -33,8 +33,12 @@ SC_MODULE(Testbench)
     cout << "   |" << setw(3);
 
     for (int i = 0; i < INSTRUCTION; ++i) //Imprime el Resultado de la operación en binario
+      cout<< res_address.read().range(INSTRUCTION-(i+1),INSTRUCTION-(i+1));
+    cout << " | " << setw(3);
+    
+    for (int i = 0; i < INSTRUCTION; ++i) //Imprime el Resultado de la operación en binario
       cout<< res.read().range(INSTRUCTION-(i+1),INSTRUCTION-(i+1));
-    cout << " | " << setw(7);
+    cout << " | " << setw(3);
 
     cout << instruction.read(); //Imprime las Instrucciones en decimal
     cout << setw (11) << "|   ";
@@ -54,7 +58,7 @@ SC_MODULE(Testbench)
 
   void test()
   {
-    cout << "\nInstrucción|  Dir. Op1  |  Dir. Op2  | Val. Op1  | Val. Op2 |  Res  | Inst. Decimal | Operación\n"
+    cout << "\nInstrucción|  Dir. Op1  |  Dir. Op2  | Val. Op1  | Val. Op2 | Res dir|  Res  | Inst. Decimal | Operación\n"
          << "------------------------------------------------------------------------------------------------\n";
 
     for (int i = 0; i < 6; ++i)

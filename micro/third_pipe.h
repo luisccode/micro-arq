@@ -31,26 +31,26 @@ ifstream RF;
                res_value.append( to_string( res.read().range(INSTRUCTION-(i+1),INSTRUCTION-(i+1)) ) ) ;
             
             new_line = res_value + line.substr(4,4);
-            break;
       }
       n_line++;
     }
     RF.close();
    
-
-    // int n=0;
-    // ofstream RF2;
-    // RF2.open(Register_file);
-    // for(int i=0; i<all_lines.size(); i++){
-    //     if(n==n_line){
-    //         RF2<<new_line<<endl;
-    //     }
-    //     else{
-    //         RF2<<all_lines[i]<<endl;
-    //     }
-    //     n++;
-    // }
-    // RF2.close();
+    int n=0;
+    ofstream RF2;
+    RF2.open(Register_file);
+    for(unsigned int i=0; i<all_lines.size(); i++){
+        if(n==n_line){
+            RF2<<new_line;
+        }
+        else{
+            RF2<<all_lines[i];
+        }
+        n++;
+        if(i != all_lines.size()-1)
+            RF2<<endl;
+    }
+    RF2.close();
   }
   SC_CTOR(Third_pipe)
   {
