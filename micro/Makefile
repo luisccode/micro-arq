@@ -8,7 +8,7 @@
 # Nombre del ejecutable
 	TARGET = test
 # Arquitectura de su sistema operativo (64 o 32)
-	ARQ = 
+	ARQ = 64
 
 ##########################################################################
 

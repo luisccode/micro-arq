@@ -6,13 +6,15 @@ using namespace std;
 
 class Entidad{
     private: 
-       	int Aum_t_cultural;
-       	int Aum_t_emocional;
-	   	int Aum_t_biologico;
+       	int Aum_biologico;
+       	int Aum_cultural;
+	   	int Aum_emocional;
+        bool visitado;
+
         string nombre;
     public:
         Entidad();
-        Entidad(int atc,int ate, int atb, string nombre);
+        Entidad(int atb,int atc, int ate, string nombre);
 };
 
 #endif
