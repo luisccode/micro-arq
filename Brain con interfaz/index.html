@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title> Engineer Mind</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="public/css/style.css">
+</head>
+<body>
+  <section id="sidebar">
+    <div class="header">
+      <div>
+        <h1 class="title">Engineer Mind</h1>
+      </div>
+    </div>
+    <p id="instructions"></p>
+    <div id="editor">
+      <div id="css">
+        <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
+        En términos simples, inteligencia artificial (IA) se refiere a sistemas o máquinas que imitan la inteligencia humana para realizar tareas y pueden mejorar iterativamente a partir de la información que recopilan. La IA se manifiesta de varias formas. Algunos ejemplos son:
+
+        Los bots conversacionales que utilizan IA para comprender más rápido los problemas de los clientes y proporcionar respuestas más eficientes
+        Los asistentes inteligentes utilizan la IA para analizar información crítica proveniente de grandes conjuntos de datos de texto libre para mejorar la programación
+        Los motores de recomendación pueden proporcionar recomendaciones automatizadas para programas de TV según los hábitos de visualización de los usuarios
+        </div>
+      <!-- <button id="next" class="translate" >Iniciar</button> -->
+    </div>
+  </section>
+  <section id="view">
+    <div id="board">
+      <div id="overlay">
+        <span class="plot">R.ITALIANO</span>
+        <span class="plot">MUSEO</span>
+        <span class="plot">ACUARIO</span>
+        <span class="plot">R.MEXICANO</span>
+        <span class="plot">ULA</span>
+        <span class="plot">MALL</span>
+        <span class="plot">BARBERIA</span>
+        <span class="plot">DESCO.</span>
+        <span class="plot">HOSPITAL</span>
+        <span class="plot">CPC</span>
+        <span class="plot">CPC</span>
+        <span class="plot">HELADERIA</span>
+        <span class="plot">CASA</span>
+        <span class="plot">CINE</span>
+        <span class="plot">TRABAJO</span>
+        <span class="plot">GYM</span>
+        <span class="plot">MERCADO</span>
+        <span class="plot">NIKE</span>
+        <span class="plot">R.CHINO</span>
+        <span class="plot">NOVIA</span>
+        <span class="plot">CASINO</span>
+        <span class="plot">CAFE</span>
+        <span class="plot">BIBLIOTECA</span>
+        <span class="plot">BAR</span>
+        <span class="plot">ZOOLOGICO</span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+      </div>
+      <div id="plants">
+        <div class="plant carrot" id="brain" style="grid-row-start: 1;  grid-column-start: 1;">
+          <div class="bg" style="background-image: url('/public/img/brain.png');"></div>
+        </div>
+      </div>
+      <div id="garden"></div>
+      <div id="soil">
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+      </div>
+    </div>
+  </section>
+  
+</body>
+<script>
+    fetch("http://localhost:9090/transform-file").then(function (response) {
+       return response.text()
+     })
+     .then(function(texto) {
+       console.log("el texto es: " +texto)
+         brain = document.getElementById("brain");
+         brain.setAttribute('style', `grid-column-start: ${texto[0]};  grid-row-start: ${texto[1]};`)
+         // brain.style.gridColumnStart = texto[0];
+         // brain.style.gridRowStart = texto[1];
+      })
+     .catch(function (error) {
+       console.log('Hubo un problema:' + error.response);
+     });
+     setTimeout(function(){
+       window.location.reload(1);
+     }, 5000);
+</script>
+</html>

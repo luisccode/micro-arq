@@ -73,7 +73,8 @@ SC_MODULE(Testbench)
   SC_CTOR(Testbench)
   {
     SC_THREAD(test);
-    sensitive << value_1 << value_2;
+    // sensitive << clk.pos();
+    sensitive << res;
   }
 };
 
